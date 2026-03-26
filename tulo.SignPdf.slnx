@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/Src/">
+    <Project Path="Src/tulo.SigningPdfA3/tulo.SigningPdfA3.csproj" />
+  </Folder>
+  <Folder Name="/Tests/">
+    <Project Path="Tests/tulo.SigningPdfA3Tests/tulo.SigningPdfA3Tests.csproj" />
+  </Folder>
+</Solution>

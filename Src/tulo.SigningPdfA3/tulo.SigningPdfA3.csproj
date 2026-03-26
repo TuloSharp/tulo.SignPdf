@@ -1,0 +1,57 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <RootNamespace>tulo.SigningPdfA3</RootNamespace>
+    <AssemblyName>tulo.SigningPdfA3</AssemblyName>
+  </PropertyGroup>
+
+
+  <PropertyGroup>
+    <PackageId>tulo.SigningPdfA3</PackageId>
+    <Version>1.0.0</Version>
+    <Authors>Tulo Team</Authors>
+    <Company>Tulo Team</Company>
+    <Description>
+      Signing Pdf-A3. Free to use. No modification or redistribution without permission.
+    </Description>
+    <RepositoryType>GitHub</RepositoryType>
+    <RepositoryUrl>https://github.com/TuloSharp/tulo.eInvoiceApp.git</RepositoryUrl>
+    <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <Copyright>© 2025–2026 Tulo Team</Copyright>
+
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="LICENSE.txt" Pack="true" PackagePath="">
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="PDFsharp" Version="6.2.4" />
+    <PackageReference Include="Serilog" Version="4.2.0" />
+    <PackageReference Include="Serilog.AspNetCore" Version="8.0.3" />
+    <PackageReference Include="Serilog.Enrichers.Context" Version="4.6.5" />
+    <PackageReference Include="Serilog.Enrichers.Environment" Version="3.0.1" />
+    <PackageReference Include="Serilog.Enrichers.Memory" Version="1.0.4" />
+    <PackageReference Include="Serilog.Enrichers.Process" Version="3.0.0" />
+    <PackageReference Include="Serilog.Enrichers.Thread" Version="4.0.0" />
+    <PackageReference Include="Serilog.Exceptions" Version="8.4.0" />
+    <PackageReference Include="Serilog.Expressions" Version="5.0.0" />
+    <PackageReference Include="Serilog.Extensions.Hosting" Version="8.0.0" />
+    <PackageReference Include="Serilog.Extensions.Logging" Version="8.0.0" />
+    <PackageReference Include="Serilog.Sinks.Async" Version="2.1.0" />
+    <PackageReference Include="Serilog.Sinks.Console" Version="6.0.0" />
+    <PackageReference Include="Serilog.Sinks.File" Version="6.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="8.0.1" />
+  </ItemGroup>
+
+</Project>

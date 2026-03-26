@@ -1,0 +1,15 @@
+TULO PUBLIC USE LICENSE (PROPRIETARY)
+
+Copyright (c) 2026 Tulo Entrepreneurial Company (limited liability) [UG].
+All rights reserved.
+
+You are permitted to use this software in binary form as provided by the Licensor.
+
+You may NOT:
+- modify, adapt, translate, or create derivative works of the software,
+- reverse engineer, decompile, or disassemble it (except where prohibited by law),
+- redistribute, publish, sublicense, sell, rent, lease, or otherwise make it available to third parties
+  without written permission from the Licensor.
+
+THE SOFTWARE IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND. THE LICENSOR IS NOT LIABLE FOR ANY DAMAGES
+ARISING FROM THE USE OF THE SOFTWARE.

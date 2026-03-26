@@ -1,0 +1,1 @@
+JSON -> XML -> PDF -> PDF/A -> PDF/A-3 mit XML -> PDF/A-3 signing
