@@ -1,4 +1,23 @@
 <Solution>
+  <Folder Name="/Deploy/" />
+  <Folder Name="/Deploy/Local/">
+    <File Path="Deploy/Local/build-publish_local.ps1" />
+  </Folder>
+  <Folder Name="/Shared/" />
+  <Folder Name="/Shared/Certificates/">
+    <File Path="Shared/Certificates/dummyPdfA3Signing.crt" />
+    <File Path="Shared/Certificates/dummyPdfA3Signing.key" />
+    <File Path="Shared/Certificates/dummyPdfA3Signing.openssl.conf" />
+    <File Path="Shared/Certificates/dummyPdfA3Signing.pfx" />
+  </Folder>
+  <Folder Name="/Shared/Examples/">
+    <File Path="Shared/Examples/ZF_Extended__Sammelrechnung_3_Bestellungen_generated_pdfa3.pdf" />
+  </Folder>
+  <Folder Name="/Solution Items/">
+    <File Path="LICENSE" />
+    <File Path="NuGet.Config" />
+    <File Path="README.md" />
+  </Folder>
   <Folder Name="/Src/">
     <Project Path="Src/tulo.SigningPdfA3/tulo.SigningPdfA3.csproj" />
   </Folder>

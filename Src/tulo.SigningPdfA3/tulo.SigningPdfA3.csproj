@@ -1,6 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <OutputType>Exe</OutputType>
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
@@ -8,25 +9,20 @@
     <AssemblyName>tulo.SigningPdfA3</AssemblyName>
   </PropertyGroup>
 
-
   <PropertyGroup>
     <PackageId>tulo.SigningPdfA3</PackageId>
     <Version>1.0.0</Version>
     <Authors>Tulo Team</Authors>
     <Company>Tulo Team</Company>
     <Description>
-      Signing Pdf-A3. Free to use. No modification or redistribution without permission.
+      Signing Pdf. Free to use. No modification or redistribution without permission.
     </Description>
     <RepositoryType>GitHub</RepositoryType>
-    <RepositoryUrl>https://github.com/TuloSharp/tulo.eInvoiceApp.git</RepositoryUrl>
+    <RepositoryUrl>https://github.com/TuloSharp/tulo.SignPdf.git</RepositoryUrl>
     <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <Copyright>© 2025–2026 Tulo Team</Copyright>
 
-    <IncludeSymbols>true</IncludeSymbols>
-    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-    <EmbedUntrackedSources>true</EmbedUntrackedSources>
-    <Deterministic>true</Deterministic>
   </PropertyGroup>
 
   <ItemGroup>
@@ -52,6 +48,27 @@
     <PackageReference Include="Serilog.Sinks.File" Version="6.0.0" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.1" />
     <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="8.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Certificates\dummyPdfA3Signing.crt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Certificates\dummyPdfA3Signing.key">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Certificates\dummyPdfA3Signing.openssl.conf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Certificates\dummyPdfA3Signing.pfx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Examples\ZF_Extended__Sammelrechnung_3_Bestellungen_generated_pdfa3.pdf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

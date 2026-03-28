@@ -1,4 +1,5 @@
-﻿using tulo.SigningPdfA3.Services;
+﻿using System.Diagnostics;
+using tulo.SigningPdfA3.Services;
 
 namespace tulo.SigningPdfA3Tests.Services;
 
@@ -13,13 +14,14 @@ public class PdfSignatureServiceTests
     [TestInitialize]
     public void Setup()
     {
-        _testRunDirectory = Path.Combine(Path.GetTempPath(), "PdfSignatureServiceTests", Guid.NewGuid().ToString("N"));
+        var baseDir = AppDomain.CurrentDomain.BaseDirectory;
+        var solutionRoot = Path.GetFullPath(Path.Combine(baseDir, "..", "..", "..", "..", ".."));
+
+        _testRunDirectory = Path.Combine(solutionRoot, "TestResults", Guid.NewGuid().ToString("N"));
         Directory.CreateDirectory(_testRunDirectory);
 
-        var baseDir = AppDomain.CurrentDomain.BaseDirectory;
-
-        _inputPdfPath = Path.Combine(baseDir, "Examples", "ZF_Extended__Sammelrechnung_3_Bestellungen_generated_pdfa3.pdf");
-        _certificatePath = Path.Combine(baseDir, "Certificates", "dummyPdfA3Signing.pfx");
+        _inputPdfPath = Path.Combine(solutionRoot, "Shared", "Examples", "ZF_Extended__Sammelrechnung_3_Bestellungen_generated_pdfa3.pdf");
+        _certificatePath = Path.Combine(solutionRoot, "Shared", "Certificates", "dummyPdfA3Signing.pfx");
         _outputPdfPath = Path.Combine(_testRunDirectory, "ZF_Extended__Sammelrechnung_3_Bestellungen_generated_pdfa3_signed.pdf");
     }
 
@@ -47,6 +49,12 @@ public class PdfSignatureServiceTests
 
         var fileInfo = new FileInfo(_outputPdfPath);
         Assert.IsTrue(fileInfo.Length > 0, "Signed PDF is empty.");
+
+        // Open the signed PDF with the default application
+        if (result.Success && File.Exists(_outputPdfPath))
+        {
+            Process.Start(new ProcessStartInfo(_outputPdfPath) { UseShellExecute = true });
+        }
     }
 
     [TestCleanup]
@@ -54,8 +62,8 @@ public class PdfSignatureServiceTests
     {
         try
         {
-            if (Directory.Exists(_testRunDirectory))
-                Directory.Delete(_testRunDirectory, recursive: true);
+            //if (Directory.Exists(_testRunDirectory))
+            //    Directory.Delete(_testRunDirectory, recursive: true);
         }
         catch
         {

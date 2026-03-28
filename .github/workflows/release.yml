@@ -1,0 +1,20 @@
+name: Release tulo.SignPdf
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  call-release:
+    uses: ./.github/workflows/common-release.yml
+    with:
+      project_name: tulo.SignPdf
+      project_path: Src/tulo.SignPdf/tulo.SignPdf.csproj
+      publish_dir: publish/tulo.SignPdf
+      zip_prefix: tulo.SignPdf
+      executable_name: tulo.SigningPdfA3.exe
+      runtime: win-x64
+      dotnet_version: 8.0.x
+      config_file: nuget.config
+      prerelease: true

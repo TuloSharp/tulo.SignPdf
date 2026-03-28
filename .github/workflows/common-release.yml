@@ -1,0 +1,246 @@
+name: Common Release
+
+on:
+  workflow_call:
+    inputs:
+      project_name:
+        required: true
+        type: string
+      project_path:
+        required: true
+        type: string
+      publish_dir:
+        required: true
+        type: string
+      zip_prefix:
+        required: true
+        type: string
+      executable_name:
+        required: true
+        type: string
+      runtime:
+        required: false
+        type: string
+        default: win-x64
+      dotnet_version:
+        required: false
+        type: string
+        default: 8.0.x
+      config_file:
+        required: false
+        type: string
+        default: nuget.config
+      prerelease:
+        required: false
+        type: boolean
+        default: true
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: windows-latest
+
+    env:
+      PROJECT_NAME: ${{ inputs.project_name }}
+      PROJECT_PATH: ${{ inputs.project_path }}
+      PUBLISH_DIR: ${{ inputs.publish_dir }}
+      ZIP_NAME: ${{ inputs.zip_prefix }}-${{ github.ref_name }}-${{ inputs.runtime }}.zip
+      EXECUTABLE_NAME: ${{ inputs.executable_name }}
+      RUNTIME: ${{ inputs.runtime }}
+      CONFIG_FILE: ${{ inputs.config_file }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Show workflow context
+        shell: pwsh
+        run: |
+          Write-Host "::group::Workflow context"
+          Write-Host "Repository: $env:GITHUB_REPOSITORY"
+          Write-Host "Ref: $env:GITHUB_REF"
+          Write-Host "Ref name: $env:GITHUB_REF_NAME"
+          Write-Host "SHA: $env:GITHUB_SHA"
+          Write-Host "Runner OS: $env:RUNNER_OS"
+          Write-Host "Workspace: $env:GITHUB_WORKSPACE"
+          Write-Host "::endgroup::"
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ inputs.dotnet_version }}
+
+      - name: Show .NET info
+        shell: pwsh
+        run: |
+          Write-Host "::group::.NET info"
+          dotnet --info
+          Write-Host "::endgroup::"
+
+      - name: Verify required files
+        shell: pwsh
+        run: |
+          Write-Host "::group::Verify required files"
+
+          if (-not (Test-Path $env:PROJECT_PATH)) {
+            Write-Error "Project file not found: $env:PROJECT_PATH"
+            exit 1
+          }
+
+          if (-not (Test-Path $env:CONFIG_FILE)) {
+            Write-Error "Config file not found: $env:CONFIG_FILE"
+            exit 1
+          }
+
+          Write-Host "Project file found: $env:PROJECT_PATH"
+          Write-Host "Config file found: $env:CONFIG_FILE"
+          Write-Host "::endgroup::"
+
+      - name: Restore
+        shell: pwsh
+        run: |
+          Write-Host "::group::Restore"
+          dotnet restore $env:PROJECT_PATH --configfile $env:CONFIG_FILE -v minimal
+          Write-Host "::endgroup::"
+
+      - name: Check version matches tag
+        shell: pwsh
+        run: |
+          Write-Host "::group::Version check"
+
+          [xml]$proj = Get-Content $env:PROJECT_PATH
+          $projectVersion = ($proj.Project.PropertyGroup | Where-Object { $_.Version } | Select-Object -First 1).Version
+          $tagVersion = "${{ github.ref_name }}" -replace '^v', ''
+
+          Write-Host "Project version: $projectVersion"
+          Write-Host "Tag version: $tagVersion"
+
+          if (-not $projectVersion) {
+            Write-Error "No <Version> element found in the project file."
+            exit 1
+          }
+
+          if ($projectVersion -ne $tagVersion) {
+            Write-Error "Version mismatch: project has '$projectVersion' but tag is '$tagVersion'"
+            exit 1
+          }
+
+          Write-Host "Version check passed."
+          Write-Host "::endgroup::"
+
+      - name: Publish
+        shell: pwsh
+        run: |
+          Write-Host "::group::Publish"
+          dotnet publish $env:PROJECT_PATH `
+            -c Release `
+            -r $env:RUNTIME `
+            --no-self-contained `
+            -p:PublishSingleFile=true `
+            -p:DebugType=None `
+            -p:DebugSymbols=false `
+            -o $env:PUBLISH_DIR `
+            -v minimal
+          Write-Host "::endgroup::"
+
+      - name: Show publish output
+        shell: pwsh
+        run: |
+          Write-Host "::group::Publish output"
+
+          if (-not (Test-Path $env:PUBLISH_DIR)) {
+            Write-Error "Publish directory not found: $env:PUBLISH_DIR"
+            exit 1
+          }
+
+          Get-ChildItem -Path $env:PUBLISH_DIR -Recurse | Select-Object FullName, Length, LastWriteTime
+          Write-Host "::endgroup::"
+
+      - name: Verify EXE exists
+        shell: pwsh
+        run: |
+          Write-Host "::group::Verify EXE"
+          $exePath = Join-Path $env:PUBLISH_DIR $env:EXECUTABLE_NAME
+
+          if (-not (Test-Path $exePath)) {
+            Write-Error "Expected EXE not found: $exePath"
+            exit 1
+          }
+
+          Write-Host "EXE found: $exePath"
+          Write-Host "::endgroup::"
+
+      - name: Create README.txt
+        shell: pwsh
+        run: |
+          Write-Host "::group::Create README.txt"
+          @"
+          $env:PROJECT_NAME
+
+          Requirements
+          - Windows x64
+          - .NET 8 Runtime installed
+
+          How to start
+          1. Download the ZIP file
+          2. Extract the ZIP file
+          3. Run $env:EXECUTABLE_NAME
+
+          Notes
+          - This is a beta version for testing
+          - Please report issues on GitHub
+          "@ | Out-File -FilePath (Join-Path $env:PUBLISH_DIR "README.txt") -Encoding utf8
+
+          Get-Content (Join-Path $env:PUBLISH_DIR "README.txt")
+          Write-Host "::endgroup::"
+
+      - name: Create ZIP
+        shell: pwsh
+        run: |
+          Write-Host "::group::Create ZIP"
+
+          if (Test-Path $env:ZIP_NAME) {
+            Remove-Item $env:ZIP_NAME -Force
+          }
+
+          Compress-Archive `
+            -Path "$env:PUBLISH_DIR/*" `
+            -DestinationPath $env:ZIP_NAME
+
+          Write-Host "ZIP created: $env:ZIP_NAME"
+          Get-Item $env:ZIP_NAME | Select-Object FullName, Length, LastWriteTime
+          Write-Host "::endgroup::"
+
+      - name: Upload release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: ${{ inputs.project_name }} ${{ github.ref_name }}
+          prerelease: ${{ inputs.prerelease }}
+          files: ${{ env.ZIP_NAME }}
+          body: |
+            Beta release of ${{ inputs.project_name }}
+
+            Requirements
+            - Windows x64
+            - .NET 8 Runtime installed
+
+            How to use
+            1. Download the ZIP file
+            2. Extract the ZIP file
+            3. Run ${{ inputs.executable_name }}
+
+            Notes
+            - This is a beta version for testing
+            - Please report issues on GitHub
+
+      - name: Final summary
+        shell: pwsh
+        run: |
+          Write-Host "::group::Summary"
+          Write-Host "Release completed successfully."
+          Write-Host "Project: $env:PROJECT_NAME"
+          Write-Host "Tag: $env:GITHUB_REF_NAME"
+          Write-Host "ZIP: $env:ZIP_NAME"
+          Write-Host "::endgroup::"

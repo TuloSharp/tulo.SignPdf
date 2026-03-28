@@ -5,10 +5,7 @@ using tulo.SigningPdfA3.ResultPattern;
 
 namespace tulo.SigningPdfA3.Runners;
 
-public sealed class SignedPdfCliRunner(
-    IConfiguration configuration,
-    IPdfSignatureService pdfSignatureService,
-    ILoggerFactory loggerFactory) : ISignedPdfCliRunner
+public sealed class SignedPdfCliRunner(IConfiguration configuration, IPdfSignatureService pdfSignatureService, ILoggerFactory loggerFactory) : ISignedPdfCliRunner
 {
     private readonly IConfiguration _configuration = configuration;
     private readonly IPdfSignatureService _pdfSignatureService = pdfSignatureService;

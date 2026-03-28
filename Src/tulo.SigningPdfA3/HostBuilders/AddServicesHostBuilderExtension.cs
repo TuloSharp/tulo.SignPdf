@@ -1,7 +1,9 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using tulo.SigningPdfA3.Interfaces;
 using tulo.SigningPdfA3.Runners;
+using tulo.SigningPdfA3.Services;
 
 namespace tulo.SigningPdfA3.HostBuilders;
 
@@ -20,7 +22,8 @@ public static class AddServicesHostBuilderExtension
             //#endregion
 
             // CLI runner
-            services.AddSingleton<ISignedPdfCliRunner, SignedPdfCliRunner>();
+            services.AddTransient<IPdfSignatureService, PdfSignatureService>();
+            services.AddTransient<ISignedPdfCliRunner, SignedPdfCliRunner>();
         });
 
         return host;
