@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Hosting;
 using Serilog;
 
-namespace tulo.SigningPdfA3.HostBuilders;
+namespace tulo.SigningPdf.HostBuilders;
 
 /// <summary>
 /// Provides extension methods for configuring application settings in an <see cref="IHostBuilder"/>.

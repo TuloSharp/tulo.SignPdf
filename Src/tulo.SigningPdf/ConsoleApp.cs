@@ -1,9 +1,9 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using System.Collections.Frozen;
-using tulo.SigningPdfA3.HostBuilders;
+using tulo.SigningPdf.HostBuilders;
 
-namespace tulo.SigningPdfA3;
+namespace tulo.SigningPdf;
 
 public sealed class ConsoleApp
 {

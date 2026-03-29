@@ -1,14 +1,14 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using tulo.SigningPdfA3;
-using tulo.SigningPdfA3.Interfaces;
-using tulo.SigningPdfA3.Runners;
-using tulo.SigningPdfA3.Services;
+using tulo.SigningPdf;
+using tulo.SigningPdf.Interfaces;
+using tulo.SigningPdf.Runners;
+using tulo.SigningPdf.Services;
 using ExtConfig = Microsoft.Extensions.Configuration;
 using ExtLogging = Microsoft.Extensions.Logging;
 
-namespace tulo.SigningPdfA3Tests;
+namespace tulo.SigningPdfTests;
 
 public static class SignedPdfCliRunnerTestFactory
 {

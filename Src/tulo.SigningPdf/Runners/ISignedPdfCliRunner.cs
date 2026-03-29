@@ -1,4 +1,4 @@
-﻿namespace tulo.SigningPdfA3.Runners;
+﻿namespace tulo.SigningPdf.Runners;
 
 public interface ISignedPdfCliRunner
 {

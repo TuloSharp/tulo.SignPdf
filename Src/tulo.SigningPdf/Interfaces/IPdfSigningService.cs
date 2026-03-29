@@ -1,6 +1,6 @@
-using tulo.SigningPdfA3.ResultPattern;
+using tulo.SigningPdf.ResultPattern;
 
-namespace tulo.SigningPdfA3.Interfaces;
+namespace tulo.SigningPdf.Interfaces;
 
 public interface IPdfSignatureService
 {

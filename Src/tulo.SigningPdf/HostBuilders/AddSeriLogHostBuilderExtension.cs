@@ -1,8 +1,8 @@
 ﻿using Microsoft.Extensions.Hosting;
 using Serilog;
-using tulo.SigningPdfA3.Serilog;
+using tulo.SigningPdf.Serilog;
 
-namespace tulo.SigningPdfA3.HostBuilders;
+namespace tulo.SigningPdf.HostBuilders;
 
 /// <summary>
 /// Provides an extension method to configure Serilog for an <see cref="IHostBuilder"/>.

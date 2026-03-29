@@ -1,4 +1,4 @@
-﻿namespace tulo.SigningPdfA3.Exceptions;
+﻿namespace tulo.SigningPdf.Exceptions;
 
 /// <summary>
 /// StartupException

@@ -5,12 +5,12 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <RootNamespace>tulo.SigningPdfA3</RootNamespace>
-    <AssemblyName>tulo.SigningPdfA3</AssemblyName>
+    <RootNamespace>tulo.SigningPdf</RootNamespace>
+    <AssemblyName>tulo.SigningPdf</AssemblyName>
   </PropertyGroup>
 
   <PropertyGroup>
-    <PackageId>tulo.SigningPdfA3</PackageId>
+    <PackageId>tulo.SigningPdf</PackageId>
     <Version>1.0.0</Version>
     <Authors>Tulo Team</Authors>
     <Company>Tulo Team</Company>

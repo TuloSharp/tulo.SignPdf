@@ -1,6 +1,6 @@
 ﻿using Serilog;
 
-namespace tulo.SigningPdfA3.Serilog;
+namespace tulo.SigningPdf.Serilog;
 
 /// <summary>
 /// Provides functionality for creating and initializing a Serilog bootstrap logger.
