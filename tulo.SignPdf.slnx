@@ -19,9 +19,9 @@
     <File Path="README.md" />
   </Folder>
   <Folder Name="/Src/">
-    <Project Path="Src/tulo.SigningPdfA3/tulo.SigningPdfA3.csproj" />
+    <Project Path="Src/tulo.SigningPdf/tulo.SigningPdf.csproj" />
   </Folder>
   <Folder Name="/Tests/">
-    <Project Path="Tests/tulo.SigningPdfA3Tests/tulo.SigningPdfA3Tests.csproj" />
+    <Project Path="Tests/tulo.SigningPdfTests/tulo.SigningPdfTests.csproj" />
   </Folder>
 </Solution>
