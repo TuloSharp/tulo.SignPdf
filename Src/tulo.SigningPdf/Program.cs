@@ -3,7 +3,6 @@ using Microsoft.Extensions.Logging;
 using Serilog;
 using Serilog.Debugging;
 using System.Collections.Concurrent;
-using System.Reflection;
 using tulo.SigningPdf;
 using tulo.SigningPdf.Exceptions;
 using tulo.SigningPdf.Runners;
@@ -14,8 +13,8 @@ public static class Program
     public static async Task<int> Main(string[] args)
     {
         #region Set Working Directory
-        var exePath = Assembly.GetExecutingAssembly().Location;
-        var exeDir = Path.GetDirectoryName(exePath);
+        // ✅ Also works with single-file publishing
+       var exeDir = AppContext.BaseDirectory;
         if (!string.IsNullOrEmpty(exeDir))
         {
             Directory.SetCurrentDirectory(exeDir);
@@ -67,7 +66,7 @@ public static class Program
         }
         catch (Exception ex)
         {
-            Log.Error(ex, "PdfA3 extended createion is failed");
+            Log.Error(ex, "signed PdfA3 extended createion is failed");
             return 99;
         }
         finally
