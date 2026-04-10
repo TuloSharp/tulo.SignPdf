@@ -20,4 +20,4 @@ jobs:
       runtime: win-x64
       dotnet_version: 8.0.x
       config_file: nuget.config
-      prerelease: true
+      prerelease: false
