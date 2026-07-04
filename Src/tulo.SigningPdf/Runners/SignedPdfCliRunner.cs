@@ -1,9 +1,9 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using tulo.SigningPdf.Interfaces;
-using tulo.SigningPdf.ResultPattern;
+using Tulo.SigningPdf.Interfaces;
+using Tulo.SigningPdf.ResultPattern;
 
-namespace tulo.SigningPdf.Runners;
+namespace Tulo.SigningPdf.Runners;
 
 public sealed class SignedPdfCliRunner(IConfiguration configuration, IPdfSignatureService pdfSignatureService, ILoggerFactory loggerFactory) : ISignedPdfCliRunner
 {

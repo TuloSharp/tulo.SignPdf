@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
-using tulo.SigningPdf.Runners;
+using Tulo.SigningPdf.Runners;
 
-namespace tulo.SigningPdfTests.Runners;
+namespace Tulo.SigningPdfTests.Runners;
 
 [TestClass]
 public class SignedPdfCliRunnerTests

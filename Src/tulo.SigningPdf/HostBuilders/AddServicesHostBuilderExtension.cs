@@ -1,11 +1,11 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using tulo.SigningPdf.Interfaces;
-using tulo.SigningPdf.Runners;
-using tulo.SigningPdf.Services;
+using Tulo.SigningPdf.Interfaces;
+using Tulo.SigningPdf.Runners;
+using Tulo.SigningPdf.Services;
 
-namespace tulo.SigningPdf.HostBuilders;
+namespace Tulo.SigningPdf.HostBuilders;
 
 public static class AddServicesHostBuilderExtension
 {

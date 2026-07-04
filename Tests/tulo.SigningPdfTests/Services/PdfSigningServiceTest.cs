@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
-using tulo.SigningPdf.Services;
+using Tulo.SigningPdf.Services;
 
-namespace tulo.SigningPdfTests.Services;
+namespace Tulo.SigningPdfTests.Services;
 
 [TestClass]
 public class PdfSignatureServiceTests

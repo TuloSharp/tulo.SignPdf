@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 
-namespace tulo.SigningPdf.Serilog;
+namespace Tulo.SigningPdf.Serilog;
 
 /// <summary>
 /// Utility class for working with Serilog configuration settings.

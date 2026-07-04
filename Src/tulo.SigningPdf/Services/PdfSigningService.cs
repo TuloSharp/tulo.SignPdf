@@ -2,10 +2,10 @@ using PdfSharp.Drawing;
 using PdfSharp.Pdf.IO;
 using PdfSharp.Pdf.Signatures;
 using System.Security.Cryptography.X509Certificates;
-using tulo.SigningPdf.Interfaces;
-using tulo.SigningPdf.ResultPattern;
+using Tulo.SigningPdf.Interfaces;
+using Tulo.SigningPdf.ResultPattern;
 
-namespace tulo.SigningPdf.Services;
+namespace Tulo.SigningPdf.Services;
 
 public sealed class PdfSignatureService : IPdfSignatureService
 {

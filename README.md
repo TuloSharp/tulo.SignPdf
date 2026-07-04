@@ -65,24 +65,24 @@ The program expects the following values:
 Example PowerShell command for using the CLI:
 
 ```bash
-PS D:\VisualStudio\tulo.SignPdf\publish\tulo.SigningPdf> .\tulo.SigningPdf.exe --inputPathPdf "D:\VisualStudio\tulo.SignPdf\Shared\Examples\ZF_Extended__Sammelrechnung_3_Bestellungen_generated_pdfa3.pdf" --outputPathSignedPdf "D:\VisualStudio\tulo.SignPdf\TestResults\manual_test\ZF_Extended__Sammelrechnung_3_Bestellungen_generated_pdfa3_signed.pdf" --signaturePath "D:\VisualStudio\tulo.SignPdf\Shared\Certificates\dummyPdfA3Signing.pfx" --publicKey "12345@" --reason "Unit Test Signatur" --location "Deutschland" --contactInfo "test@example.com"
+PS D:\VisualStudio\tulo.SignPdf\publish\Tulo.SigningPdf> .\Tulo.SigningPdf.exe --inputPathPdf "D:\VisualStudio\tulo.SignPdf\Shared\Examples\ZF_Extended__Sammelrechnung_3_Bestellungen_generated_pdfa3.pdf" --outputPathSignedPdf "D:\VisualStudio\tulo.SignPdf\TestResults\manual_test\ZF_Extended__Sammelrechnung_3_Bestellungen_generated_pdfa3_signed.pdf" --signaturePath "D:\VisualStudio\tulo.SignPdf\Shared\Certificates\dummyPdfA3Signing.pfx" --publicKey "12345@" --reason "Unit Test Signatur" --location "Deutschland" --contactInfo "test@example.com"
 
-2026.03.27-11:51:07.317 [USERName] [Thread:1] [ProcessID:4764] [IN] (tulo.SigningPdf.Serilog.BootstrapLogger) Bootstrap logger initialized
-2026.03.27-11:51:07.343 [USERName] [Thread:1] [ProcessID:4764] [IN] (tulo.SigningPdf.HostBuilders.AddAppSettings) AddAppSettings has been initialized successfully.
-2026.03.27-11:51:07.345 [USERName] [Thread:1] [ProcessID:4764] [IN] (tulo.SigningPdf.HostBuilders.AddSerilog) Serilog has been initialized successfully.
-2026.03.27-11:51:07.360 [USERName] [Thread:1] [ProcessID:4764] [IN] (tulo.SigningPdf.HostBuilders.AddAppSettings) settings file 'appsettings.json' from app data folder 'D:\VisualStudio\tulo.SignPdf\publish\tulo.SigningPdf-appsettings' not loaded...
-2026.03.27-11:51:07.457 [USERName] [Thread:1] [ProcessID:4764] [IN] (tulo.SigningPdf.Runners.SignedPdfCliRunner) CLI: SIGNPDF:InputPathPdf = D:\VisualStudio\tulo.SignPdf\Shared\Examples\ZF_Extended__Sammelrechnung_3_Bestellungen_generated_pdfa3.pdf
-2026.03.27-11:51:07.460 [USERName] [Thread:1] [ProcessID:4764] [IN] (tulo.SigningPdf.Runners.SignedPdfCliRunner) CLI: SIGNPDF:OutputPathSignedPdf = D:\VisualStudio\tulo.SignPdf\TestResults\manual_test\ZF_Extended__Sammelrechnung_3_Bestellungen_generated_pdfa3_signed.pdf
-2026.03.27-11:51:07.460 [USERName] [Thread:1] [ProcessID:4764] [IN] (tulo.SigningPdf.Runners.SignedPdfCliRunner) CLI: SIGNPDF:SignaturePath = D:\VisualStudio\tulo.SignPdf\Shared\Certificates\dummyPdfA3Signing.pfx
-2026.03.27-11:51:07.460 [USERName] [Thread:1] [ProcessID:4764] [IN] (tulo.SigningPdf.Runners.SignedPdfCliRunner) CLI: SIGNPDF:PublicKey = <provided>
-2026.03.27-11:51:07.461 [USERName] [Thread:1] [ProcessID:4764] [IN] (tulo.SigningPdf.Runners.SignedPdfCliRunner) CLI: SIGNPDF:Reason = Unit Test Signatur
-2026.03.27-11:51:07.461 [USERName] [Thread:1] [ProcessID:4764] [IN] (tulo.SigningPdf.Runners.SignedPdfCliRunner) CLI: SIGNPDF:Location = Deutschland
-2026.03.27-11:51:07.461 [USERName] [Thread:1] [ProcessID:4764] [IN] (tulo.SigningPdf.Runners.SignedPdfCliRunner) CLI: SIGNPDF:ContactInfo = test@example.com
-2026.03.27-11:51:07.462 [USERName] [Thread:1] [ProcessID:4764] [IN] (tulo.SigningPdf.Runners.SignedPdfCliRunner) Starting PDF signing.
-2026.03.27-11:51:07.462 [USERName] [Thread:1] [ProcessID:4764] [IN] (tulo.SigningPdf.Runners.SignedPdfCliRunner) Input PDF: D:\VisualStudio\tulo.SignPdf\Shared\Examples\ZF_Extended__Sammelrechnung_3_Bestellungen_generated_pdfa3.pdf
-2026.03.27-11:51:07.463 [USERName] [Thread:1] [ProcessID:4764] [IN] (tulo.SigningPdf.Runners.SignedPdfCliRunner) Output signed PDF: D:\VisualStudio\tulo.SignPdf\TestResults\manual_test\ZF_Extended__Sammelrechnung_3_Bestellungen_generated_pdfa3_signed.pdf
-2026.03.27-11:51:07.577 [USERName] [Thread:1] [ProcessID:4764] [IN] (tulo.SigningPdf.Runners.SignedPdfCliRunner) SUCCESS: Signed PDF created at D:\VisualStudio\tulo.SignPdf\TestResults\manual_test\ZF_Extended__Sammelrechnung_3_Bestellungen_generated_pdfa3_signed.pdf
-PS D:\VisualStudio\tulo.SignPdf\publish\tulo.SigningPdf>
+2026.03.27-11:51:07.317 [USERName] [Thread:1] [ProcessID:4764] [IN] (Tulo.SigningPdf.Serilog.BootstrapLogger) Bootstrap logger initialized
+2026.03.27-11:51:07.343 [USERName] [Thread:1] [ProcessID:4764] [IN] (Tulo.SigningPdf.HostBuilders.AddAppSettings) AddAppSettings has been initialized successfully.
+2026.03.27-11:51:07.345 [USERName] [Thread:1] [ProcessID:4764] [IN] (Tulo.SigningPdf.HostBuilders.AddSerilog) Serilog has been initialized successfully.
+2026.03.27-11:51:07.360 [USERName] [Thread:1] [ProcessID:4764] [IN] (Tulo.SigningPdf.HostBuilders.AddAppSettings) settings file 'appsettings.json' from app data folder 'D:\VisualStudio\tulo.SignPdf\publish\Tulo.SigningPdf-appsettings' not loaded...
+2026.03.27-11:51:07.457 [USERName] [Thread:1] [ProcessID:4764] [IN] (Tulo.SigningPdf.Runners.SignedPdfCliRunner) CLI: SIGNPDF:InputPathPdf = D:\VisualStudio\tulo.SignPdf\Shared\Examples\ZF_Extended__Sammelrechnung_3_Bestellungen_generated_pdfa3.pdf
+2026.03.27-11:51:07.460 [USERName] [Thread:1] [ProcessID:4764] [IN] (Tulo.SigningPdf.Runners.SignedPdfCliRunner) CLI: SIGNPDF:OutputPathSignedPdf = D:\VisualStudio\tulo.SignPdf\TestResults\manual_test\ZF_Extended__Sammelrechnung_3_Bestellungen_generated_pdfa3_signed.pdf
+2026.03.27-11:51:07.460 [USERName] [Thread:1] [ProcessID:4764] [IN] (Tulo.SigningPdf.Runners.SignedPdfCliRunner) CLI: SIGNPDF:SignaturePath = D:\VisualStudio\tulo.SignPdf\Shared\Certificates\dummyPdfA3Signing.pfx
+2026.03.27-11:51:07.460 [USERName] [Thread:1] [ProcessID:4764] [IN] (Tulo.SigningPdf.Runners.SignedPdfCliRunner) CLI: SIGNPDF:PublicKey = <provided>
+2026.03.27-11:51:07.461 [USERName] [Thread:1] [ProcessID:4764] [IN] (Tulo.SigningPdf.Runners.SignedPdfCliRunner) CLI: SIGNPDF:Reason = Unit Test Signatur
+2026.03.27-11:51:07.461 [USERName] [Thread:1] [ProcessID:4764] [IN] (Tulo.SigningPdf.Runners.SignedPdfCliRunner) CLI: SIGNPDF:Location = Deutschland
+2026.03.27-11:51:07.461 [USERName] [Thread:1] [ProcessID:4764] [IN] (Tulo.SigningPdf.Runners.SignedPdfCliRunner) CLI: SIGNPDF:ContactInfo = test@example.com
+2026.03.27-11:51:07.462 [USERName] [Thread:1] [ProcessID:4764] [IN] (Tulo.SigningPdf.Runners.SignedPdfCliRunner) Starting PDF signing.
+2026.03.27-11:51:07.462 [USERName] [Thread:1] [ProcessID:4764] [IN] (Tulo.SigningPdf.Runners.SignedPdfCliRunner) Input PDF: D:\VisualStudio\tulo.SignPdf\Shared\Examples\ZF_Extended__Sammelrechnung_3_Bestellungen_generated_pdfa3.pdf
+2026.03.27-11:51:07.463 [USERName] [Thread:1] [ProcessID:4764] [IN] (Tulo.SigningPdf.Runners.SignedPdfCliRunner) Output signed PDF: D:\VisualStudio\tulo.SignPdf\TestResults\manual_test\ZF_Extended__Sammelrechnung_3_Bestellungen_generated_pdfa3_signed.pdf
+2026.03.27-11:51:07.577 [USERName] [Thread:1] [ProcessID:4764] [IN] (Tulo.SigningPdf.Runners.SignedPdfCliRunner) SUCCESS: Signed PDF created at D:\VisualStudio\tulo.SignPdf\TestResults\manual_test\ZF_Extended__Sammelrechnung_3_Bestellungen_generated_pdfa3_signed.pdf
+PS D:\VisualStudio\tulo.SignPdf\publish\Tulo.SigningPdf>
 ```
 
 ## What to check before running the `.exe`

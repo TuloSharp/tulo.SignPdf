@@ -1,7 +1,7 @@
 ﻿using Serilog.Core;
 using Serilog.Events;
 
-namespace tulo.SigningPdf.Serilog;
+namespace Tulo.SigningPdf.Serilog;
 
 /// <inheritdoc />
 public class UsernameEnrichment : ILogEventEnricher

@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Src\tulo.SigningPdf\tulo.SigningPdf.csproj" />
+    <ProjectReference Include="..\..\Src\tulo.SigningPdf\Tulo.SigningPdf.csproj" />
   </ItemGroup>
 
   <ItemGroup>

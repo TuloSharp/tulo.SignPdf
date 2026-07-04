@@ -1,4 +1,4 @@
-﻿namespace tulo.SigningPdf.ResultPattern;
+﻿namespace Tulo.SigningPdf.ResultPattern;
 
 public class OperationResult
 {

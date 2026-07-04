@@ -24,9 +24,9 @@
     <File Path="README.md" />
   </Folder>
   <Folder Name="/Src/">
-    <Project Path="Src/tulo.SigningPdf/tulo.SigningPdf.csproj" />
+    <Project Path="Src/Tulo.SigningPdf/Tulo.SigningPdf.csproj" DisplayName="Tulo.SigningPdf" />
   </Folder>
   <Folder Name="/Tests/">
-    <Project Path="Tests/tulo.SigningPdfTests/tulo.SigningPdfTests.csproj" />
+    <Project Path="Tests/Tulo.SigningPdfTests/Tulo.SigningPdfTests.csproj" DisplayName="Tulo.SigningPdfTests" />
   </Folder>
 </Solution>
