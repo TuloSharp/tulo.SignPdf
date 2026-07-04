@@ -26,6 +26,28 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Fonts\ARIAL.TTF" />
+    <None Remove="Fonts\CASCADIACODE.TTF" />
+    <None Remove="Fonts\ROBOTO.TTF" />
+    <None Remove="Fonts\VERDANA.TTF" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Fonts\ARIAL.TTF">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Fonts\CASCADIACODE.TTF">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Fonts\ROBOTO.TTF">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Fonts\VERDANA.TTF">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="LICENSE.txt" Pack="true" PackagePath="">
     </None>
   </ItemGroup>
@@ -69,6 +91,10 @@
     <None Update="Examples\ZF_Extended__Sammelrechnung_3_Bestellungen_generated_pdfa3.pdf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Utilities\" />
   </ItemGroup>
 
 </Project>
