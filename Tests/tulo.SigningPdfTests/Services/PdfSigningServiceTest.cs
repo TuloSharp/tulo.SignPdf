@@ -28,7 +28,7 @@ public class PdfSignatureServiceTests
         _outputPdfPath = Path.Combine(_testRunDirectory, "ZF_Extended__Sammelrechnung_3_Bestellungen_generated_pdfa3_signed.pdf");
         _outputVisiblePdfPath = Path.Combine(_testRunDirectory, "ZF_Extended__Sammelrechnung_3_Bestellungen_generated_pdfa3_signed_visible.pdf");
     }
-    
+
     [TestCleanup]
     public void Cleanup()
     {
@@ -70,9 +70,7 @@ public class PdfSignatureServiceTests
 
         // Open the signed PDF with the default application
         if (result.Success && File.Exists(_outputPdfPath))
-        {
             Process.Start(new ProcessStartInfo(_outputPdfPath) { UseShellExecute = true });
-        }
     }
 
     [TestMethod]
@@ -117,9 +115,7 @@ public class PdfSignatureServiceTests
 
         // Optional: open the signed PDF with the default application
         if (signResult.Success && File.Exists(_outputVisiblePdfPath))
-        {
             Process.Start(new ProcessStartInfo(_outputVisiblePdfPath) { UseShellExecute = true });
-        }
     }
 
     [TestMethod]
@@ -145,7 +141,6 @@ public class PdfSignatureServiceTests
         Assert.IsFalse(result.Success, "Expected failure for invalid signaturePageIndex.");
         StringAssert.Contains(result.Message, "signaturePageIndex");
 
-        Assert.IsFalse(File.Exists(_outputVisiblePdfPath),
-            "Output PDF should not be created when signaturePageIndex is invalid.");
+        Assert.IsFalse(File.Exists(_outputVisiblePdfPath), "Output PDF should not be created when signaturePageIndex is invalid.");
     }
 }
