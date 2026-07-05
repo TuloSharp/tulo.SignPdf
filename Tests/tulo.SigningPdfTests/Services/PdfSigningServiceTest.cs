@@ -86,7 +86,7 @@ public class PdfSignatureServiceTests
         const string location = "Germany";
         const string contactInfo = "visible@test.example";
 
-        var signatureRect = new XRect(50, 700, 250, 60);
+        var signatureRect = new XRect(400, 180, 140, 60);
         const int signaturePageIndex = 0;
         const PdfMessageDigestType digestType = PdfMessageDigestType.SHA256;
 
