@@ -17,6 +17,7 @@ public sealed class ConsoleApp
     public const string ArgLocation = "--location";
     public const string ArgContactInfo = "--contactInfo";
     public const string ArgOutputPathSignedPdf = "--outputPathSignedPdf";
+    public const string ArgSignatureRect = "--signatureRect";
 
     // Config keys
     public const string KeyInputPathPdf = "SIGNPDF:InputPathPdf";
@@ -26,6 +27,7 @@ public sealed class ConsoleApp
     public const string KeyLocation = "SIGNPDF:Location";
     public const string KeyContactInfo = "SIGNPDF:ContactInfo";
     public const string KeyOutputPathSignedPdf = "SIGNPDF:OutputPathSignedPdf";
+    public const string KeySignatureRect = "SIGNPDF:SignatureRect";
 
     // CLI → IConfiguration mapping
     private static readonly FrozenDictionary<string, string> _commandLineMap =

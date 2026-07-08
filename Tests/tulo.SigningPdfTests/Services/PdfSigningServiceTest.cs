@@ -1,6 +1,8 @@
 ﻿using PdfSharp.Drawing;
 using PdfSharp.Pdf.Signatures;
 using System.Diagnostics;
+using System.Security.Cryptography.X509Certificates;
+using System.Text.RegularExpressions;
 using Tulo.SigningPdf.Services;
 
 namespace Tulo.SigningPdfTests.Services;
@@ -8,6 +10,8 @@ namespace Tulo.SigningPdfTests.Services;
 [TestClass]
 public class PdfSignatureServiceTests
 {
+    public TestContext TestContext { get; set; } = null!;
+
     private string _testRunDirectory = null!;
     private string _inputPdfPath = null!;
     private string _outputPdfPath = null!;
@@ -46,7 +50,6 @@ public class PdfSignatureServiceTests
     [TestMethod]
     public void SignPdf_Should_Create_Signed_Pdf_Successfully()
     {
-        // Arrange
         var service = new PdfSignatureService();
 
         const string certificatePassword = "12345@";
@@ -57,18 +60,14 @@ public class PdfSignatureServiceTests
         Assert.IsTrue(File.Exists(_inputPdfPath), $"Input PDF not found: {_inputPdfPath}");
         Assert.IsTrue(File.Exists(_certificatePath), $"Certificate not found: {_certificatePath}");
 
-        // Act
-        var result = service.SignPdf(_inputPdfPath, _outputPdfPath, _certificatePath, certificatePassword, reason, location, contactInfo);
+        var result = service.SignPdf(_inputPdfPath, _outputPdfPath, _certificatePath,
+                                     certificatePassword, reason, location, contactInfo);
 
-        // Assert
         Assert.IsNotNull(result);
         Assert.IsTrue(result.Success, $"Expected success, but got error: {result.Message}");
         Assert.IsTrue(File.Exists(_outputPdfPath), $"Signed PDF was not created: {_outputPdfPath}");
+        Assert.IsTrue(new FileInfo(_outputPdfPath).Length > 0, "Signed PDF is empty.");
 
-        var fileInfo = new FileInfo(_outputPdfPath);
-        Assert.IsTrue(fileInfo.Length > 0, "Signed PDF is empty.");
-
-        // Open the signed PDF with the default application
         if (result.Success && File.Exists(_outputPdfPath))
             Process.Start(new ProcessStartInfo(_outputPdfPath) { UseShellExecute = true });
     }
@@ -76,14 +75,12 @@ public class PdfSignatureServiceTests
     [TestMethod]
     public void SignPdf_Should_Create_Visible_Signed_Pdf_With_Custom_Options()
     {
-        // Arrange
         var signingService = new PdfSignatureService();
 
         const string certificatePassword = "12345@";
         const string reason = "Visible signature test";
         const string location = "Germany";
         const string contactInfo = "visible@test.example";
-
         var signatureRect = new XRect(400, 180, 140, 60);
         const int signaturePageIndex = 0;
         const PdfMessageDigestType digestType = PdfMessageDigestType.SHA256;
@@ -91,29 +88,39 @@ public class PdfSignatureServiceTests
         Assert.IsTrue(File.Exists(_inputPdfPath), $"Input PDF not found: {_inputPdfPath}");
         Assert.IsTrue(File.Exists(_certificatePath), $"Certificate not found: {_certificatePath}");
 
-        // Act
+        // trace certificate subject fields
+        var cert = new X509Certificate2(_certificatePath, certificatePassword);
+        TestContext.WriteLine("=== Certificate Info ===");
+        TestContext.WriteLine($"Subject:      {cert.Subject}");
+        TestContext.WriteLine($"CN:           {cert.GetNameInfo(X509NameType.SimpleName, false) ?? "null"}");
+        TestContext.WriteLine($"O  (Org):     {ExtractSubjectField(cert, "O") ?? "null"}");
+        TestContext.WriteLine($"OU (Unit):    {ExtractSubjectField(cert, "OU") ?? "null"}");
+        TestContext.WriteLine($"E  (Email):   {ExtractSubjectField(cert, "E") ?? "null → try EMAILADDRESS"}");
+        TestContext.WriteLine($"C  (Country): {ExtractSubjectField(cert, "C") ?? "null"}");
+        TestContext.WriteLine($"Valid From:   {cert.NotBefore:dd.MM.yyyy}");
+        TestContext.WriteLine($"Valid To:     {cert.NotAfter:dd.MM.yyyy}");
+        TestContext.WriteLine("========================");
+
         var signResult = signingService.SignPdf(_inputPdfPath, _outputVisiblePdfPath, _certificatePath,
                                                 certificatePassword, reason, location, contactInfo, digestType,
                                                 visibleSignature: true, signatureRect: signatureRect,
                                                 signaturePageIndex: signaturePageIndex);
 
-        // Assert signing result
         Assert.IsNotNull(signResult);
         Assert.IsTrue(signResult.Success, $"Expected success, but got error: {signResult.Message}");
         Assert.IsTrue(File.Exists(_outputVisiblePdfPath), $"Signed PDF was not created: {_outputVisiblePdfPath}");
+        Assert.IsTrue(new FileInfo(_outputVisiblePdfPath).Length > 0, "Visible signed PDF is empty.");
 
-        var fileInfo = new FileInfo(_outputVisiblePdfPath);
-        Assert.IsTrue(fileInfo.Length > 0, "Visible signed PDF is empty.");
-
-        // Assert raw PDF markers for signature presence
         var pdfBytes = File.ReadAllBytes(_outputVisiblePdfPath);
         var pdfText = System.Text.Encoding.Latin1.GetString(pdfBytes);
 
         StringAssert.Contains(pdfText, "/ByteRange");
         StringAssert.Contains(pdfText, "/Contents");
         StringAssert.Contains(pdfText, "/Type/Sig");
+        StringAssert.Contains(pdfText, "/Widget");
+        StringAssert.Contains(pdfText, "/Annots");
+        StringAssert.Contains(pdfText, "/AP");
 
-        // Optional: open the signed PDF with the default application
         if (signResult.Success && File.Exists(_outputVisiblePdfPath))
             Process.Start(new ProcessStartInfo(_outputVisiblePdfPath) { UseShellExecute = true });
     }
@@ -121,7 +128,6 @@ public class PdfSignatureServiceTests
     [TestMethod]
     public void SignPdf_Should_Fail_When_SignaturePageIndex_Is_Out_Of_Range()
     {
-        // Arrange
         var service = new PdfSignatureService();
 
         const string certificatePassword = "12345@";
@@ -129,18 +135,26 @@ public class PdfSignatureServiceTests
         Assert.IsTrue(File.Exists(_inputPdfPath), $"Input PDF not found: {_inputPdfPath}");
         Assert.IsTrue(File.Exists(_certificatePath), $"Certificate not found: {_certificatePath}");
 
-        // Act
-        var result = service.SignPdf(_inputPdfPath, _outputVisiblePdfPath, _certificatePath, certificatePassword,
-                                     reason: "Invalid page index test", location: "Germany",
-                                     contactInfo: "test@example.com", digestType: PdfMessageDigestType.SHA256,
-                                     visibleSignature: true, signatureRect: new XRect(50, 700, 250, 60),
+        var result = service.SignPdf(_inputPdfPath, _outputVisiblePdfPath, _certificatePath,
+                                     certificatePassword,
+                                     reason: "Invalid page index test",
+                                     location: "Germany",
+                                     contactInfo: "test@example.com",
+                                     digestType: PdfMessageDigestType.SHA256,
+                                     visibleSignature: true,
+                                     signatureRect: new XRect(50, 700, 250, 60),
                                      signaturePageIndex: 999);
 
-        // Assert
         Assert.IsNotNull(result);
         Assert.IsFalse(result.Success, "Expected failure for invalid signaturePageIndex.");
         StringAssert.Contains(result.Message, "signaturePageIndex");
-
         Assert.IsFalse(File.Exists(_outputVisiblePdfPath), "Output PDF should not be created when signaturePageIndex is invalid.");
     }
+
+    private static string? ExtractSubjectField(X509Certificate2 cert, string key)
+    {
+        var match = Regex.Match(cert.Subject, $@"{key}=([^,]+)");
+        return match.Success ? match.Groups[1].Value.Trim() : null;
+    }
 }
+

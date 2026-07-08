@@ -1,5 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using PdfSharp.Drawing;
+using System.Globalization;
 using Tulo.SigningPdf.Interfaces;
 using Tulo.SigningPdf.ResultPattern;
 
@@ -22,6 +24,9 @@ public sealed class SignedPdfCliRunner(IConfiguration configuration, IPdfSignatu
             var reason = _configuration[ConsoleApp.KeyReason];
             var location = _configuration[ConsoleApp.KeyLocation];
             var contactInfo = _configuration[ConsoleApp.KeyContactInfo];
+            var signatureRectRaw = _configuration[ConsoleApp.KeySignatureRect];
+            var signatureRect = ParseRect(signatureRectRaw);
+            var visibleSignature = signatureRect.HasValue;
 
             _logger.LogInformation("CLI: {Key} = {Value}",
                 ConsoleApp.KeyInputPathPdf,
@@ -99,14 +104,16 @@ public sealed class SignedPdfCliRunner(IConfiguration configuration, IPdfSignatu
             _logger.LogInformation("Input PDF: {Path}", inputPdfPath);
             _logger.LogInformation("Output signed PDF: {Path}", outputPathSignedPdf);
 
-            OperationResult result = _pdfSignatureService.SignPdf(
-                inputPdfPath: inputPdfPath,
-                outputPdfPath: outputPathSignedPdf,
-                certificatePath: signaturePath,
-                certificatePassword: publicKey,
-                reason: reason,
-                location: location,
-                contactInfo: contactInfo);
+            OperationResult result = _pdfSignatureService.SignPdf(inputPdfPath: inputPdfPath,
+                                                                  outputPdfPath: outputPathSignedPdf,
+                                                                  certificatePath: signaturePath,
+                                                                  certificatePassword: publicKey,
+                                                                  reason: reason,
+                                                                  location: location,
+                                                                  contactInfo: contactInfo,
+                                                                  visibleSignature: visibleSignature,
+                                                                  signatureRect: signatureRect,
+                                                                  signaturePageIndex: 0);
 
             if (!result.Success)
             {
@@ -144,4 +151,25 @@ public sealed class SignedPdfCliRunner(IConfiguration configuration, IPdfSignatu
         public const int OutputSignedPdfMissing = 8;
         public const int ProcessingFailed = 10;
     }
+
+    // NEW: helper method at bottom of class
+    private static XRect? ParseRect(string? value)
+    {
+        if (string.IsNullOrWhiteSpace(value))
+            return null;
+
+        var parts = value.Split(',');
+
+        if (parts.Length != 4)
+            return null;
+
+        if (double.TryParse(parts[0], NumberStyles.Any, CultureInfo.InvariantCulture, out var x) &&
+            double.TryParse(parts[1], NumberStyles.Any, CultureInfo.InvariantCulture, out var y) &&
+            double.TryParse(parts[2], NumberStyles.Any, CultureInfo.InvariantCulture, out var w) &&
+            double.TryParse(parts[3], NumberStyles.Any, CultureInfo.InvariantCulture, out var h))
+            return new XRect(x, y, w, h);
+
+        return null;
+    }
+
 }

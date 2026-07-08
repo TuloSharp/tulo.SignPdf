@@ -20,7 +20,19 @@ function CreateOpenSSLConfig {
         [string]$ConfigPath,
 
         [Parameter(Mandatory = $true)]
-        [string]$CommonName
+        [string]$CommonName,
+
+        [Parameter(Mandatory = $false)]
+        [string]$Organization ,
+
+        [Parameter(Mandatory = $false)]
+        [string]$OrganizationalUnit,
+
+        [Parameter(Mandatory = $false)]
+        [string]$Email,
+
+        [Parameter(Mandatory = $false)]
+        [string]$Country
     )
 
     Write-Host "Creating OpenSSL configuration file" -ForegroundColor Blue
@@ -34,7 +46,11 @@ distinguished_name = dn
 x509_extensions    = v3_cert
 
 [ dn ]
-CN = $CommonName
+CN           = $CommonName
+O            = $Organization
+OU           = $OrganizationalUnit
+emailAddress = $Email
+C            = $Country
 
 [ v3_cert ]
 basicConstraints = critical,CA:FALSE
@@ -65,7 +81,7 @@ $keyFile    = Join-Path $DestinationPath "$certBaseName.key"
 $crtFile    = Join-Path $DestinationPath "$certBaseName.crt"
 $pfxFile    = Join-Path $DestinationPath "$certBaseName.pfx"
 
-CreateOpenSSLConfig -ConfigPath $configFile -CommonName $certBaseName
+CreateOpenSSLConfig -ConfigPath $configFile -CommonName $certBaseName -Organization "Tulo Team" -OrganizationalUnit "IT" -Email "info@tuloteam.org" -Country "DE"
 
 # PowerShell path -> WSL path
 $driveLetter = $baseScriptPath.Substring(0, 1).ToLower()

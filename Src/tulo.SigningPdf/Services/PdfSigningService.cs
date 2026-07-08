@@ -118,7 +118,7 @@ public sealed class PdfSignatureService : IPdfSignatureService
                     ContactInfo = contactInfo ?? string.Empty,
                     PageIndex = signaturePageIndex,
                     Rectangle = pdfRect,
-                    AppearanceHandler = new VisibleSignatureAppearanceHandler(certificate.GetNameInfo(X509NameType.SimpleName, false), reason, location)
+                    AppearanceHandler = new VisibleSignatureAppearanceHandler(certificate.GetNameInfo(X509NameType.SimpleName, false), ExtractSubjectField(certificate, "O"), ExtractSubjectField(certificate, "E") ?? ExtractSubjectField(certificate, "EMAILADDRESS"), reason, location)
                 };
             }
             else
@@ -148,9 +148,7 @@ public sealed class PdfSignatureService : IPdfSignatureService
             if (isCertificateExpired)
                 warnings.Add($"Certificate expired on {certificate.NotAfter:dd.MM.yyyy}.");
 
-            var message = warnings.Count == 0
-                ? $"Signed PDF created successfully: {outputPdfPath}"
-                : $"Signed PDF created successfully with warnings: {string.Join(" | ", warnings)}";
+            var message = warnings.Count == 0 ? $"Signed PDF created successfully: {outputPdfPath}" : $"Signed PDF created successfully with warnings: {string.Join(" | ", warnings)}";
 
             return OperationResult<SigningInfo>.Ok(
                 new SigningInfo
@@ -176,10 +174,11 @@ public sealed class PdfSignatureService : IPdfSignatureService
 
     private static XRect ConvertTopLeftToPdfRect(XRect worldRect, double pageHeight)
     {
-        return new XRect(
-            worldRect.X,
-            pageHeight - worldRect.Y - worldRect.Height,
-            worldRect.Width,
-            worldRect.Height);
+        return new XRect(worldRect.X, pageHeight - worldRect.Y - worldRect.Height, worldRect.Width, worldRect.Height);
+    }
+    private static string? ExtractSubjectField(X509Certificate2 cert, string key)
+    {
+        var match = Regex.Match(cert.Subject, $@"{key}=([^,]+)");
+        return match.Success ? match.Groups[1].Value.Trim() : null;
     }
 }
