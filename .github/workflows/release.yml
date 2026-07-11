@@ -12,11 +12,11 @@ jobs:
   call-release:
     uses: ./.github/workflows/common-release.yml
     with:
-      project_name: tulo.SignPdf
-      project_path: Src/tulo.SigningPdf/tulo.SigningPdf.csproj
-      publish_dir: publish/tulo.SigningPdf
-      zip_prefix: tulo.SignPdf
-      executable_name: tulo.SigningPdf.exe
+      project_name: Tulo.SignPdf
+      project_path: Src/Tulo.SigningPdf/Tulo.SigningPdf.csproj
+      publish_dir: publish/Tulo.SigningPdf
+      zip_prefix: Tulo.SignPdf
+      executable_name: Tulo.SigningPdf.exe
       runtime: win-x64
       dotnet_version: 8.0.x
       config_file: nuget.config
